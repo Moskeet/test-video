@@ -15,4 +15,5 @@
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
-composer
+.docker/data/*
+!.docker/data/.gitkeep
