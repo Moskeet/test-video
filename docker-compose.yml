@@ -1,40 +1,65 @@
 version: "3.7"
 
 services:
-    php-apache:
-        build: .docker/php-apache
-        container_name: php-apache
+    nginx-proxy:
+        image: jwilder/nginx-proxy
+        container_name: nginx-proxy
         ports:
-            - 8080:80
-            - 8443:443
+            - "80:80"
         volumes:
-            - ./:/var/www
-        depends_on:
-            - mysql
-            - writabledata
-        links:
-            - mysql
+            - /var/run/docker.sock:/tmp/docker.sock:ro
 
-    mysql:
+    db:
         image: mysql:5.7
-        container_name: mysql
-        ports:
-          - 3336:3306
-          - 33360:33060
         volumes:
             - .docker/data/db:/var/lib/mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: project-db
-            MYSQL_USER: user
-            MYSQL_PASSWORD: password
+            MYSQL_DATABASE: db_name
+            MYSQL_USER: db_user
+            MYSQL_PASSWORD: db_password
+        ports:
+            - 43306:3306
+            - 43060:33060
 
-    writabledata:
-        image: busybox:glibc
+    php:
+        build:
+            context: .docker/php7-fpm
+            args:
+                TIMEZONE: ${TIMEZONE}
         volumes:
-            - symfonycache:/var/www/var/cache
-            - symfonylogs:/var/www/var/logs
+            - .:/var/www/symfony
+        depends_on:
+            - db
+        ports:
+            - 9000:9000
 
-volumes:
-    symfonycache:
-    symfonylogs:
+    api:
+        build: .docker/api
+        ports:
+            - 20080:80
+            - 20443:443
+        volumes:
+            - ./:/var/www/symfony
+        environment:
+            VIRTUAL_HOST: api.local
+        depends_on:
+            - php
+
+    auth:
+        build: .docker/auth
+        ports:
+            - 21080:80
+            - 21443:443
+        volumes:
+            - ./:/var/www/symfony
+        environment:
+            VIRTUAL_HOST: auth.local
+        depends_on:
+            - api
+            - php
+
+networks:
+    default:
+        external:
+            name: nginx-proxy
