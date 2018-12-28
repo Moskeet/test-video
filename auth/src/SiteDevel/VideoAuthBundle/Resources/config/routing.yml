@@ -1,0 +1,11 @@
+site_devel_video_auth_homepage:
+    path:     /
+    defaults: { _controller: SiteDevelVideoAuthBundle:Default:index }
+
+site_devel_video_auth_oauth_connect:
+    path:     /connect/video
+    defaults: { _controller: SiteDevelVideoAuthBundle:OAuth:connect }
+
+site_devel_video_auth_oauth_connect_check:
+    path:     /connect/video/check
+    defaults: { _controller: SiteDevelVideoAuthBundle:OAuth:connectCheck }

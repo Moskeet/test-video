@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\OAuth\Provider;
+namespace SiteDevel\VideoAuthBundle\OAuth\Provider;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;

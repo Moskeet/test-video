@@ -74,8 +74,8 @@ knpu_oauth2_client:
     clients:
         video_oauth:
             type: generic
-            provider_class: AppBundle\OAuth\Provider\VideoOAuthProvider
-            client_id: '%env(foo_bar_client_id)%'
-            client_secret: '%env(foo_bar_client_secret)%'
-            redirect_route: connect_facebook_check
+            provider_class: 'SiteDevel\VideoAuthBundle\OAuth\Provider\VideoOAuthProvider'
+            client_id: 'foo'
+            client_secret: 'boo'
+            redirect_route: site_devel_video_auth_oauth_connect_check
             redirect_params: {}
