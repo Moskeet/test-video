@@ -1,5 +1,16 @@
+site_devel_o_auth:
+    resource: "@SiteDevelOAuthBundle/Resources/config/routing.yml"
+    prefix:   /
+
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+    prefix: /oauth/v2/auth
+
+fos_oauth_server_token:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
+
+fos_oauth_server_authorize:
+    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
 
 site_devel_video:
     resource: "@SiteDevelVideoBundle/Controller/"

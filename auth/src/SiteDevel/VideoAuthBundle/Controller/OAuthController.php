@@ -15,9 +15,10 @@ class OAuthController extends Controller
      */
     public function connectAction()
     {
-        $clientRegistry = $this->get('knpu.oauth2.client.video_oauth');
+        $clientRegistry = $this->get('knpu.oauth2.registry');
+        $client = $clientRegistry->getClient('video_oauth');
 
-        return $clientRegistry->redirect(['video']);
+        return $client->redirect(['video']);
     }
 
     /**
@@ -26,16 +27,16 @@ class OAuthController extends Controller
      */
     public function connectCheckAction(Request $request)
     {
-        $clientRegistry = $this->get('knpu.oauth2.client.video_oauth');
-        /** @var \KnpU\OAuth2ClientBundle\Client\Provider\FacebookClient $client */
+        $clientRegistry = $this->get('knpu.oauth2.registry');
+//        $clientRegistry = $this->get('knpu.oauth2.client.video_oauth');
         $client = $clientRegistry->getClient('video_oauth');
 
         try {
-            /** @var \League\OAuth2\Client\Provider\FacebookUser $user */
-            $user = $client->fetchUser();
+//            $user = $client->fetchUser();
+            $accessToken = $client->getAccessToken();
 
             // e.g. $name = $user->getFirstName();
-            var_dump($user); die;
+            var_dump($accessToken); die;
             // ...
         } catch (IdentityProviderException $e) {
             var_dump($e->getMessage()); die;

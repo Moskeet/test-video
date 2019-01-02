@@ -75,7 +75,10 @@ knpu_oauth2_client:
         video_oauth:
             type: generic
             provider_class: 'SiteDevel\VideoAuthBundle\OAuth\Provider\VideoOAuthProvider'
-            client_id: 'foo'
-            client_secret: 'boo'
+            client_id: '%client_id%'
+            client_secret: '%client_secret%'
             redirect_route: site_devel_video_auth_oauth_connect_check
             redirect_params: {}
+            provider_options:
+                auth_url: '%client_auth_url%'
+                token_url: '%client_token_url%'

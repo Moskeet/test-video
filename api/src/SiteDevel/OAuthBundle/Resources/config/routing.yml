@@ -1,0 +1,3 @@
+site_devel_o_auth_homepage:
+    path:     /
+    defaults: { _controller: SiteDevelOAuthBundle:Default:index }

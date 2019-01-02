@@ -10,8 +10,7 @@ parameters:
 
 framework:
     #esi: ~
-    #translator: { fallbacks: ['%locale%'] }
-    translator: ~
+    translator: { fallback: en }
     secret: '%secret%'
     form: ~
     csrf_protection: ~
@@ -130,3 +129,14 @@ fos_rest:
             -
                 path: "^/"
                 stop: true
+
+fos_oauth_server:
+    db_driver: orm       # Drivers available: orm, mongodb, or propel
+    client_class:        SiteDevel\OAuthBundle\Entity\OAuthClient
+    access_token_class:  SiteDevel\OAuthBundle\Entity\OAuthAccessToken
+    refresh_token_class: SiteDevel\OAuthBundle\Entity\OAuthRefreshToken
+    auth_code_class:     SiteDevel\OAuthBundle\Entity\OAuthCode
+    service:
+        options:
+            supported_scopes: 'video'
+            access_token_lifetime: 86400

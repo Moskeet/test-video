@@ -11,6 +11,16 @@ use Psr\Http\Message\ResponseInterface;
 class VideoOAuthProvider extends AbstractProvider
 {
     /**
+     * @var string
+     */
+    protected $token_url;
+
+    /**
+     * @var string
+     */
+    protected $auth_url;
+
+    /**
      * Returns the base URL for authorizing a client.
      *
      * Eg. https://oauth.service.com/authorize
@@ -19,7 +29,7 @@ class VideoOAuthProvider extends AbstractProvider
      */
     public function getBaseAuthorizationUrl()
     {
-
+        return $this->auth_url;
     }
 
     /**
@@ -32,7 +42,7 @@ class VideoOAuthProvider extends AbstractProvider
      */
     public function getBaseAccessTokenUrl(array $params)
     {
-
+        return $this->token_url;
     }
 
     /**
@@ -43,7 +53,6 @@ class VideoOAuthProvider extends AbstractProvider
      */
     public function getResourceOwnerDetailsUrl(AccessToken $token)
     {
-
     }
 
     /**
@@ -56,7 +65,6 @@ class VideoOAuthProvider extends AbstractProvider
      */
     protected function getDefaultScopes()
     {
-
     }
 
     /**
@@ -69,7 +77,6 @@ class VideoOAuthProvider extends AbstractProvider
      */
     protected function checkResponse(ResponseInterface $response, $data)
     {
-
     }
 
     /**
@@ -82,6 +89,5 @@ class VideoOAuthProvider extends AbstractProvider
      */
     protected function createResourceOwner(array $response, AccessToken $token)
     {
-
     }
 }
