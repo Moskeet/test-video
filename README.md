@@ -1,11 +1,8 @@
-#Test Video
-======
+Test Video
+==========
 
-## Apache setup
---
-
-### Apache2 configs:
-------
+Apache2 configs:
+----------------
 ```
 <VirtualHost *:80>
     ServerName test-video-api.loc
@@ -34,8 +31,8 @@
 </VirtualHost>
 ```
 
-### Installation script:
-=
+Installation script:
+========================
 API installation:
 * Run from the `[projectPath]/api/` folder `bin/install` it will:
     * install dependencies via composer + request(prompt) access to DB (access parameters)
@@ -48,6 +45,8 @@ API installation:
       * db structure
       * dummy data (specified lower here)
     * applies 777 rights (fast solution) to logs+cache folders
+    
+Auth installation:
 * Run from the `[projectPath]/auth/` folder `bin/install` it will:
     * install dependencies via composer + request(prompt) access to DB (access parameters)
       just click `Enter` on each parameter, to use default values
@@ -61,8 +60,8 @@ API installation:
     * applies 777 rights (fast solution) to logs+cache folders
   
   
-## _HOW2_
---
+_HOW2_
+------
 * visit `http://test-video.loc/app_dev.php/` you'll see a login link, click it,
   it will lead you through oAuth2 process + after login you'll see
   header, which should be used on next steps
@@ -75,8 +74,8 @@ API installation:
   is valid for 1 day.
   
  
-## DB test data:
---
+DB test data:
+-------------
 
 Users:
 
