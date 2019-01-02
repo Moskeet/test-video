@@ -4,9 +4,11 @@ namespace SiteDevel\VideoAuthBundle\Controller;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Token\AccessToken;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class OAuthController extends Controller
 {
@@ -25,19 +27,22 @@ class OAuthController extends Controller
      * @param Request $request
      * @param ClientRegistry $clientRegistry
      */
-    public function connectCheckAction(Request $request)
+    public function connectCheckAction()
     {
         $clientRegistry = $this->get('knpu.oauth2.registry');
-//        $clientRegistry = $this->get('knpu.oauth2.client.video_oauth');
         $client = $clientRegistry->getClient('video_oauth');
 
         try {
-//            $user = $client->fetchUser();
+            /** @var AccessToken $accessToken */
             $accessToken = $client->getAccessToken();
 
-            // e.g. $name = $user->getFirstName();
-            var_dump($accessToken); die;
-            // ...
+            return new Response(
+                sprintf("Use header:\nAUTHORIZATION: Bearer %s", $accessToken->getToken()),
+                Response::HTTP_OK,
+                [
+                    'Content-Type' => 'text/plain',
+                ]
+            );
         } catch (IdentityProviderException $e) {
             var_dump($e->getMessage()); die;
         }
