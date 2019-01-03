@@ -31,8 +31,8 @@ class VideoController extends FOSRestController
      * @ApiDoc(
      *     headers={
      *          {
-     *              "name"="apikey",
-     *              "description"="Authorization key",
+     *              "name"="AUTHORIZATION",
+     *              "description"="Authorization key, required value 'Bearer [token]'",
      *              "required"="true"
      *          }
      *     },
@@ -83,11 +83,11 @@ class VideoController extends FOSRestController
      *
      * @ApiDoc(
      *     headers={
-     *         {
-     *             "name"="apikey",
-     *             "description"="Authorization key",
-     *             "required"="true"
-     *         }
+     *          {
+     *              "name"="AUTHORIZATION",
+     *              "description"="Authorization key, required value 'Bearer [token]'",
+     *              "required"="true"
+     *          }
      *     },
      *     statusCodes={
      *         201="Created",
@@ -156,11 +156,11 @@ class VideoController extends FOSRestController
      *
      * @ApiDoc(
      *     headers={
-     *         {
-     *             "name"="apikey",
-     *             "description"="Authorization key",
-     *             "required"="true"
-     *         }
+     *          {
+     *              "name"="AUTHORIZATION",
+     *              "description"="Authorization key, required value 'Bearer [token]'",
+     *              "required"="true"
+     *          }
      *     },
      *     requirements={
      *         {

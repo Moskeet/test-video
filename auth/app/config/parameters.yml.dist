@@ -20,5 +20,5 @@ parameters:
 
     client_id: 1_3ywdlzyn1iyockc0wg0woksgswowss8gso84ow44scwo8ks84k
     client_secret: 50o6jk94cxgcs0co04wccsk84gkwgo8wc00w40c440c80w88kk
-    client_auth_url: http://test-video-api.loc/app_dev.php/oauth/v2/auth
-    client_token_url: http://test-video-api.loc/app_dev.php/oauth/v2/token
+    client_auth_url: 'http://test-video-api.loc/app_dev.php/oauth/v2/auth'
+    client_token_url: 'http://test-video-api.loc:11080/app_dev.php/oauth/v2/token'
