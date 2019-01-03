@@ -12,9 +12,6 @@ security:
         fos_userbundle:
             id: fos_user.user_provider.username
 
-        api_key_user_provider:
-            id: site_devel_video.security.api_key_user_provider
-
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
@@ -27,7 +24,6 @@ security:
 
         oauth_authorize:
             pattern:    ^/oauth/v2/auth
-            # Add your favorite authentication process here
             form_login:
                 provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
@@ -37,13 +33,6 @@ security:
 
         api:
             pattern: ^/api/
-#            stateless: true
-#            anonymous: false
-#            guard:
-#                authenticators:
-#                    - site_devel_video.security.api_key_authenticator
-#            provider: api_key_user_provider
-
             fos_oauth:  true
             stateless:  true
 
@@ -63,5 +52,4 @@ security:
         - { path: ^/oauth/v2/token$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-#        - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
