@@ -1,13 +1,13 @@
-version: "3.7"
+version: "3"
 
 services:
-    nginx-proxy:
-        image: jwilder/nginx-proxy
-        container_name: nginx-proxy
+    proxy:
+        build: .docker/proxy
         ports:
-            - "80:80"
-        volumes:
-            - /var/run/docker.sock:/tmp/docker.sock:ro
+            - 80:80
+        depends_on:
+          - "test-video-api.loc"
+          - "test-video.loc"
 
     db:
         image: mysql:5.7
@@ -27,39 +27,28 @@ services:
             context: .docker/php7-fpm
             args:
                 TIMEZONE: ${TIMEZONE}
-        volumes:
-            - .:/var/www/symfony
         depends_on:
             - db
         ports:
             - 9000:9000
 
-    api:
-        build: .docker/api
+    "test-video-api.loc":
+        build: .docker/test-video-api
+        container_name: "test-video-api.loc"
         ports:
-            - 20080:80
-            - 20443:443
+            - 11080:11080
         volumes:
-            - ./:/var/www/symfony
-        environment:
-            VIRTUAL_HOST: api.local
+            - ./api/:/var/www/symfony/
         depends_on:
             - php
 
-    auth:
-        build: .docker/auth
+    "test-video.loc":
+        build: .docker/test-video
+        container_name: "test-video.loc"
         ports:
-            - 21080:80
-            - 21443:443
+            - 12080:12080
         volumes:
-            - ./:/var/www/symfony
-        environment:
-            VIRTUAL_HOST: auth.local
+            - ./auth/:/var/www/symfony/
         depends_on:
-            - api
+            - "test-video-api.loc"
             - php
-
-networks:
-    default:
-        external:
-            name: nginx-proxy
