@@ -1,6 +1,61 @@
 Test Video
 ==========
 
+Docker notes:
+-------------
+Make sure you have 80 port free.
+
+Add line to your `hosts` file
+```
+127.0.0.1      test-video.loc test-video-api.loc
+```
+Run from the repo root: 
+```
+$ docker-compose up --build
+```
+In 2nd console run:
+```
+$ docker exec -it php-api /bin/bash 
+```
+In opened shell run next command, extensions + default parameters will be setup:
+```
+# bin/install
+```
+In 3rd console run:
+```
+$ docker exec -it php-auth /bin/bash 
+```
+In opened shell run the same command for the auth site (oAuth2 client),
+extensions + default parameters will be setup:
+```
+# bin/install
+```
+After these steps open in your browser `http://test-video.loc/app_dev.php/`, and click
+'Login' there. You'll be lead through oAuth process: 
+* site1 -> creates link with `redirect url`
+* site1 -> redirects you to site2 with `redirect url`
+* site2 -> requests user + password (select any from `DB test data` section)
+* site2 -> after successful login you need to `allow` token
+* site2 -> redirect to site1 with `code` (30s valid)
+* site1 -> requests `token` by `code`
+* site1 -> shows header to be used
+
+So site 1 stands for oAuth2 token retrieving.
+
+Site 2 stands for oAuth2 server + uses those tokens for authentication + api + api-docs.
+DB is used only on 1 side due to requirement about independent applications.
+
+Open in your browser `http://test-video-api.loc/app_dev.php/api-doc` (but don't close
+previous window/tab)
+
+There is calls description + `sandbox` tab on each call, you may use it for testing purposes.
+
+If you'd like to use extra tool, use endpoints:
+* _POST_ http://test-video-api.loc:11080/app_dev.php/api/add
+* _PATCH_ http://test-video-api.loc:11080/app_dev.php/api/favourite/{video}
+* _GET_ http://test-video-api.loc:11080/app_dev.php/api/not-favourited
+
+
 Apache2 configs:
 ----------------
 ```
@@ -31,12 +86,12 @@ Apache2 configs:
 </VirtualHost>
 ```
 
-Installation script:
+Apache installation script:
 ========================
 API installation:
 * Run from the `[projectPath]/api/` folder `bin/install` it will:
-    * install dependencies via composer + request(prompt) access to DB (access parameters)
-      * `database_*` - mysql user should have the rights to create DB, DB should exist
+    * install dependencies via composer + access to DB (access parameters)
+      * `database_*` - mysql user, DB should exist
       * `mailer_*` - leave it blank
       * `secret` - some dummy text
       * others - just leave default values
@@ -48,8 +103,8 @@ API installation:
     
 Auth installation:
 * Run from the `[projectPath]/auth/` folder `bin/install` it will:
-    * install dependencies via composer + request(prompt) access to DB (access parameters)
-      just click `Enter` on each parameter, to use default values
+    * install dependencies via composer + access to DB (access parameters)
+      (all default values should be used)
       * critical values are (they are set by default):
         ```
         client_id: 1_3ywdlzyn1iyockc0wg0woksgswowss8gso84ow44scwo8ks84k

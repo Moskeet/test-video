@@ -5,4 +5,4 @@ composer install --no-interaction
 
 echo "Permissions, folder var"
 MY_PATH="`dirname \"$0\"`"
-find $MY_PATH/../var | xargs chmod -v 777
+find $MY_PATH/../var | xargs chmod -v 777 > /dev/null
