@@ -31,7 +31,7 @@ class Version20181219142316 extends AbstractMigration implements ContainerAwareI
     public function up(Schema $schema)
     {
         $em = $this->container->get('doctrine.orm.entity_manager');
-        $users = $em->getRepository('SiteDevelUserBundle:User')->findAll();
+        $users = $em->getRepository('SiteDevelVideoBundle:User')->findAll();
 
         for ($i = 1; $i <= 20; $i++) {
             $videoTitle = 'Video ' . $i;

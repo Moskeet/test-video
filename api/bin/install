@@ -3,12 +3,9 @@
 echo "Bundles install"
 composer install --no-interaction
 
-echo "Create DB"
-./console --no-interaction doctrine:database:create
-
 echo "Installing DB tables + data"
 bin/console --no-interaction doctrine:migrations:migrate
 
 echo "Permissions, folder var"
 MY_PATH="`dirname \"$0\"`"
-find $MY_PATH/../var | xargs chmod -v 777
+find $MY_PATH/../var | xargs chmod -v 777 > /dev/null
