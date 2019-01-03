@@ -22,15 +22,27 @@ services:
             - 43306:3306
             - 43060:33060
 
-    php:
+    php-api:
         build:
             context: .docker/php7-fpm
             args:
                 TIMEZONE: ${TIMEZONE}
+        volumes:
+            - ./api/:/var/www/symfony/
         depends_on:
             - db
         ports:
             - 9000:9000
+
+    php-auth:
+        build:
+            context: .docker/php7-fpm
+            args:
+                TIMEZONE: ${TIMEZONE}
+        volumes:
+            - ./auth/:/var/www/symfony/
+        ports:
+            - 10000:9000
 
     "test-video-api.loc":
         build: .docker/test-video-api
@@ -40,7 +52,7 @@ services:
         volumes:
             - ./api/:/var/www/symfony/
         depends_on:
-            - php
+            - php-api
 
     "test-video.loc":
         build: .docker/test-video
@@ -51,4 +63,4 @@ services:
             - ./auth/:/var/www/symfony/
         depends_on:
             - "test-video-api.loc"
-            - php
+            - php-auth
